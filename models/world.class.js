@@ -5,7 +5,11 @@ class World {
         new Chicken(),
         new Chicken(),
     ];
+    ctx;
 
+    constructor(canvas) {
+        this.ctx = canvas.getContext('2d');
+    }
 
     draw() {
 
