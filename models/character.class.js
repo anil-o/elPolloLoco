@@ -1,7 +1,7 @@
-class Character extends Movable {
-    constructor(position_x, position_y, img) {
-        super(position_x, position_y, img);
-    }
+class Character extends MoveableObejct {
+    //constructor(x, y, img) {
+     //   super(x, y, img); 
+    //}
 
     jump() {
         

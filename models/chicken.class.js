@@ -1,7 +1,7 @@
-class Chicken extends Movable {
-    constructor(position_x, position_y, img) {
-        super(position_x, position_y, img);
-    }
+class Chicken extends MoveableObejct {
+   // constructor(x, y, img) {
+     //   super(x, y, img);
+    //}
 
     
     eat() {
