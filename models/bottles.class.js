@@ -1,13 +1,15 @@
 class Bottles extends MoveableObject{
-    
-        BOTTLES = [
+        height = 90;
+        width = 90;
+
+        BOTTLE = [
             'img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         ];
     
         constructor() {
             super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
-            this.loadImages(this.BOTTLES);
-            this.x = 200 + Math.random() * 2500;
+            this.loadImages(this.BOTTLE);
+            this.x = 200 + Math.random() * 2000;
             this.y = Math.random() * 150;
         }
     }
