@@ -5,6 +5,10 @@ class MoveableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    coinAmount = 0;
+    width = 100;
+    height = 100;
+    bottleAmount = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -43,6 +47,18 @@ class MoveableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
+    }
+
+    collectCoins() {
+        if(this.coinAmount < 100) {
+            this.coinAmount += 10;
+        }
+    }
+    
+    collectBottles() {
+        if(this.bottleAmount < 100) {
+            this.bottleAmount += 10;
+        }
     }
 
     moveRight() {

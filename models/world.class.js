@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new Statusbar();
+    statusBarHealth = new StatusbarHealth();
+    statusBarCoins = new StatusbarCoins();
+    statusBarBottles = new StatusbarBottles();
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -22,8 +24,22 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.character.isHurt();
-                    this.statusBar.setPercentage(this.character.energy);
+                    this.statusBarHealth.setPercentage(this.character.energy);
                     console.log('Collision with Character, energy', this.character.energy);
+                }
+            });
+            this.level.coins.forEach((coin) => {
+                if (this.character.isColliding(coin)) {
+                    this.character.collectCoins();
+                    console.log('Collision with Character, coin', this.character.coinAmount);
+                    this.statusBarCoins.setPercentageCoins(this.character.coinAmount);
+                }
+            });
+            this.level.bottles.forEach((bottle) => {
+                if (this.character.isColliding(bottle)) {
+                    this.character.collectBottles();
+                    console.log('Collision with Character, bottle', this.character.bottleAmount);
+                    this.statusBarBottles.setPercentageBottles(this.character.bottleAmount);
                 }
             });
         }, 200);
@@ -37,14 +53,20 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0);
+        // --------- Space for fixed objects ---------
+        this.addToMap(this.statusBarHealth);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
+        this.ctx.translate(this.camera_x, 0);
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
-        this.addToMap(this.statusBar);
 
         this.ctx.translate(-this.camera_x, 0);
 
