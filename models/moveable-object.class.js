@@ -8,6 +8,7 @@ class MoveableObject extends DrawableObject {
     coinAmount = 0;
     width = 100;
     height = 100;
+    bottle = 0;
     bottleAmount = 0;
 
     applyGravity() {
@@ -55,12 +56,6 @@ class MoveableObject extends DrawableObject {
     collectCoins() {
         if(this.coinAmount < 100) {
             this.coinAmount += 10;
-        }
-    }
-    
-    collectBottles() {
-        if(this.bottleAmount < 100) {
-            this.bottleAmount += 10;
         }
     }
 
