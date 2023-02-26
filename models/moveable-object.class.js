@@ -1,11 +1,4 @@
-class MoveableObject {
-    x = 120;
-    y = 250;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MoveableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -26,27 +19,6 @@ class MoveableObject {
         return this.y < 130;
     }
 
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawFrame(ctx) {
-        if(this instanceof Character || this instanceof Chicken || this instanceof SmallChicken 
-            || this instanceof Endboss || this instanceof Bottles || this instanceof Coins) {
-                ctx.beginPath();
-                ctx.lineWidth = '5';
-                ctx.strokeStyle = 'blue';
-                ctx.rect(this.x, this.y, this.width, this.height);
-                ctx.stroke();
-            }
-    }
-
     isColliding(mo) {
         return this.x + this.width > mo.x &&
         this.y + this.height > mo.y &&
@@ -63,22 +35,14 @@ class MoveableObject {
         }
     }
 
-    isDead() {
-        return this.energy == 0;
-    }
-
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //Difference in ms
         timepassed = timepassed / 1000; //Difference in sec
         return timepassed < 0.6;
     }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    isDead() {
+        return this.energy == 0;
     }
 
     moveRight() {
