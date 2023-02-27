@@ -26,29 +26,41 @@ class World {
             this.collisionBottles();
             this.checkThrowableObjects();
         }, 200);
+
+        setInterval(() => {
+            this.checkCharacterKilledChicken();
+        }, 10);
     }
 
     collisionEnemies() {
-        this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy)) {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.character.isHurt();
-                //this.level.enemies.splice(index, 1);
                 this.statusBarHealth.setPercentage(this.character.energy);
-                console.log('Collision with Character, energy', this.character.energy);
             }
         });
     }
 
-      checkThrowableObjects() {
-        if(this.keyboard.D) {
-            if(this.character.bottleAmount > 0) {
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-                this.throwableObjects.push(bottle);
-                this.character.bottleAmount -= 1;
-                this.character.bottle -= 20;
-                this.statusBarBottles.setPercentageBottles(this.character.bottle);
+    checkCharacterKilledChicken() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+                this.killEnemy(enemy, index);
+                setTimeout(() => {
+                    this.level.enemies.splice(index, 1);
+                }, 400);
             }
+        });
+    }
+
+    killEnemy(enemy) {
+        if (enemy instanceof Chicken) {
+            enemy.isAlive = false;
+            enemy.img = enemy.IMAGE_DEAD;
+        }
+        if (enemy instanceof SmallChicken) {
+            enemy.isAlive = false;
+            enemy.img = enemy.IMAGE_DEAD;
         }
     }
 
@@ -57,7 +69,6 @@ class World {
             if (this.character.isColliding(coin, index)) {
                 this.character.collectCoins();
                 this.level.coins.splice(index, 1);
-                console.log('Collision with Character, coin', this.character.coinAmount);
                 this.statusBarCoins.setPercentageCoins(this.character.coinAmount);
             }
         });
@@ -68,14 +79,25 @@ class World {
             if (this.character.isColliding(bottle)) {
                 this.collectBottles();
                 this.level.bottles.splice(index, 1);
-                console.log('Collision with Character, bottle', this.character.bottle);
                 this.statusBarBottles.setPercentageBottles(this.character.bottle);
             }
         });
     }
 
+    checkThrowableObjects() {
+        if (this.keyboard.D) {
+            if (this.character.bottleAmount > 0) {
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                this.character.bottleAmount -= 1;
+                this.character.bottle -= 20;
+                this.statusBarBottles.setPercentageBottles(this.character.bottle);
+            }
+        }
+    }
+
     collectBottles() {
-        if(this.character.bottle < 100) {
+        if (this.character.bottle < 100) {
             this.character.bottle += 20;
             this.character.bottleAmount += 1;
             this.statusBarBottles.setPercentageBottles(this.character.bottle);
