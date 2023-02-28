@@ -35,20 +35,22 @@ class World {
     collisionEnemies() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
-                this.character.hit();
-                this.character.isHurt();
-                this.statusBarHealth.setPercentage(this.character.energy);
+                if (enemy.isAlive == true) {
+                    this.character.hit();
+                    this.character.isHurt();
+                    this.statusBarHealth.setPercentage(this.character.energy);
+                }
             }
         });
     }
 
     checkCharacterKilledChicken() {
         this.level.enemies.forEach((enemy, index) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.isAlive == true) {
                 this.killEnemy(enemy, index);
                 setTimeout(() => {
                     this.level.enemies.splice(index, 1);
-                }, 400);
+                }, 1000);
             }
         });
     }
