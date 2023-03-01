@@ -9,7 +9,7 @@ class Bottles extends MoveableObject{
         constructor() {
             super().loadImage('img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png');
             this.loadImages(this.BOTTLE);
-            this.x = 200 + Math.random() * 2000;
-            this.y = Math.random() * 220;
+            this.x = 200 + Math.random() * 2700;
+            this.y = Math.random() * 220  + 20;
          }
     }

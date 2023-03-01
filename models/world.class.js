@@ -8,6 +8,8 @@ class World {
     statusBarHealth = new StatusbarHealth();
     statusBarCoins = new StatusbarCoins();
     statusBarBottles = new StatusbarBottles();
+    statusBarHealthEndboss = new StatusbarHealthEndboss();
+    endboss = new Endboss();
     throwableObjects = [];
 
     constructor(canvas, keyboard) {
@@ -29,6 +31,7 @@ class World {
 
         setInterval(() => {
             this.checkCharacterKilledChicken();
+            this.checkIfEndbossIsReached();
         }, 10);
     }
 
@@ -45,11 +48,12 @@ class World {
     }
 
     checkCharacterKilledChicken() {
-        this.level.enemies.forEach((enemy, index) => {
+        this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.isAlive == true) {
-                this.killEnemy(enemy, index);
+                this.killEnemy(enemy);
                 setTimeout(() => {
-                    this.level.enemies.splice(index, 1);
+                    if(enemy instanceof Chicken || enemy instanceof SmallChicken)
+                    this.level.enemies.splice(this.level.enemies.indexOf(enemy), 1);
                 }, 1000);
             }
         });
@@ -106,6 +110,12 @@ class World {
         }
     }
 
+    checkIfEndbossIsReached() {
+        if(this.character.x >= 2700) {
+            this.endboss.reachedEndboss = true;
+        }
+    }
+
     setWorld() {
         this.character.world = this;
     }
@@ -121,10 +131,14 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
+        if(this.endboss.reachedEndboss) {
+            this.addToMap(this.statusBarHealthEndboss);
+        }
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.endboss);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);

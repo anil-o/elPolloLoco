@@ -17,6 +17,7 @@ class MoveableObject extends DrawableObject {
         bottom: 0,
         };
     isAlive = true;
+    reachedEndboss = false;
 
     applyGravity() {
         setInterval(() => {
