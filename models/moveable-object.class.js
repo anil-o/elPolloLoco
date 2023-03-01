@@ -10,6 +10,7 @@ class MoveableObject extends DrawableObject {
     height = 100;
     bottle = 0;
     bottleAmount = 0;
+    healthEndboss = 100;
     offset = {
         top: 0,
         left: 0,
@@ -18,6 +19,8 @@ class MoveableObject extends DrawableObject {
         };
     isAlive = true;
     reachedEndboss = false;
+    endbossHit = false;
+    soundtrackCoinCollecting = new Audio('audio/coin_collected.mp3');
 
     applyGravity() {
         setInterval(() => {
@@ -61,8 +64,22 @@ class MoveableObject extends DrawableObject {
         return this.energy == 0;
     }
 
+    endbossDead() {
+       return this.healthEndboss == 0;
+    }
+
+    hitEndboss() {
+        this.healthEndboss -= 25;
+        console.log(this.healthEndboss);
+        if(this.healthEndboss < 0) {
+            this.healthEndboss = 0;
+        }
+    }
+
     collectCoins() {
         if(this.coinAmount < 100) {
+            this.soundtrackCoinCollecting.play();
+            this.soundtrackCoinCollecting.volume = 1.0;
             this.coinAmount += 10;
         }
     }

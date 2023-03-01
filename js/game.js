@@ -1,15 +1,17 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let soundtrack = new Audio('audio/soundtrack.mp3');
+
 
 /*
  * draw playground
  */
 function init() {
-    canvas = document.getElementById('canvas')
+    canvas = document.getElementById('canvas');
+}
+
+function startGame() {
     world = new World(canvas, keyboard);
-    //soundtrack.play();
 }
 
 window.addEventListener("keydown", (e) => {
