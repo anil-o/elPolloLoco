@@ -7,11 +7,25 @@ let keyboard = new Keyboard();
  * draw playground
  */
 function init() {
+    startGame();
+    initLevel(); 
     canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard);
 }
 
 function startGame() {
-    world = new World(canvas, keyboard);
+    let startButton = document.getElementById('startButton');
+    let startIcons = document.getElementById('startIcons');
+    let startScreen = document.getElementById('startScreen');
+    let gameDescription = document.getElementById('gameDescription');
+    let consoleDescription = document.getElementById('console');
+    let canvas = document.getElementById('canvas');
+    startButton.classList.add('d-none');
+    startIcons.classList.add('d-none');
+    startScreen.classList.remove('start-screen');
+    gameDescription.classList.add('d-none');
+    consoleDescription.classList.add('d-none');
+    canvas.classList.remove('d-none');
 }
 
 window.addEventListener("keydown", (e) => {

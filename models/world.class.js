@@ -11,11 +11,11 @@ class World {
     statusBarHealthEndboss = new StatusbarHealthEndboss();
     endboss = new Endboss();
     throwableObjects = [];
-    soundtrack = new Audio('audio/soundtrack.mp3');
     soundtrackChickenKill = new Audio('audio/chicken_kill.mp3');
     soundtrackBottleCollecting = new Audio('audio/bottle_collected.mp3');
     soundtrackEndboss = new Audio('audio/endboss.mp3');
     soundtrackHurt = new Audio('audio/hurt.mp3');
+    soundtrack = new Audio('audio/soundtrack.mp3');
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -24,6 +24,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.startSoundtrackOfTheGame();
     }
 
     run() {
@@ -44,12 +45,11 @@ class World {
         }, 10);
     }
 
-    /*startSoundtrackOfTheGame() {
+    startSoundtrackOfTheGame() {
         this.soundtrack.volume = 0.1;
-        this.soundtrack.autoplay = true;
-        this.soundtrack.mute = true;
         this.soundtrack.play();
-    }*/
+    }
+
 
     collisionEnemies() {
         this.level.enemies.forEach((enemy) => {

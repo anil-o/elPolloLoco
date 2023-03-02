@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Smokum&display=swap" rel="stylesheet">
     <script src="models/drawable-object.class.js"></script>
     <script src="models/moveable-object.class.js"></script>
     <script src="models/character.class.js"></script>
@@ -31,29 +34,37 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="levels/level1.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/html-template.js"></script>
     <link rel="icon" type="image/x-png" href="img/2_character_pepe/1_idle/idle/I-1.png">
 </head>
 
-<body onload="init()">
-    <div class="background-img d-none">
-        <h1 class="d-none">El pollo loco</h1>
+<body>
 
-        <canvas class="d-none" id="canvas" width="720" height="480">
+    <canvas class="d-none" id="canvas" width="720" height="480">
 
-        </canvas>
+    </canvas>
 
-    </div>
+        <div id="startScreen" class="start-screen">
+            <div id="startButton">
+                <button onclick="init()">
+                    Start
+                </button>
+            </div>
 
-    <div class="start-screen">
-        <div class="intro-text">
-            Welcome to Pepe Pelligroso, an exciting adventure game that will test your skills and reflexes. In this game
-            you take on the role of Pepe, a fearless adventurer.<br><br>
-
-            Pepe has been captured and is now trying to escape. But beware, the journey ahead is not easy. The creatures
-            will not surrender without a fight and will do everything in their power to stop you. Fortunately, Pepe is
-            equipped with a variety of weapons and skills that will help him overcome any obstacle.
+            <div id="startIcons"> 
+                <img class="icon" src="img/mute.png">
+                <img onclick="consoleDescription()" class="icon" src="img/joystick.png">
+                <img onclick="loadDescription()" class="icon" src="img/book.png">
+            </div>
         </div>
-    </div>
+
+        <div id="gameDescription">
+            
+        </div>
+
+        <div id="console">
+
+        </div>
 </body>
 
 </html>
