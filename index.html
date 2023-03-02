@@ -39,10 +39,23 @@
 </head>
 
 <body>
+    <div id="fullscreenDiv">
+        <div class="canvas-div">
+            <canvas class="d-none" id="canvas" width="720" height="480">
 
-    <canvas class="d-none" id="canvas" width="720" height="480">
+            </canvas>
 
-    </canvas>
+            <div id="iconsDuringGame" class="icons-during-game d-none">
+                <div class="icons-div-game">
+                    <div>
+                        <div class="icon-within-the-game">
+                            <img class="icon" src="img/mute.png">
+                            <img id="fullscreenSecond" onclick="startFullscreen('fullscreenSecond')" class="fullscreen-icon" src="img/fullscreen.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div id="startScreen" class="start-screen">
             <div id="startButton">
@@ -51,20 +64,22 @@
                 </button>
             </div>
 
-            <div id="startIcons"> 
+            <div id="startIcons">
                 <img class="icon" src="img/mute.png">
                 <img onclick="consoleDescription()" class="icon" src="img/joystick.png">
                 <img onclick="loadDescription()" class="icon" src="img/book.png">
+                <img id="fullscreen" onclick="startFullscreen('fullscreen')" class="fullscreen-icon" src="img/fullscreen.png">
             </div>
         </div>
 
         <div id="gameDescription">
-            
+
         </div>
 
         <div id="console">
 
         </div>
+    </div>
 </body>
 
 </html>

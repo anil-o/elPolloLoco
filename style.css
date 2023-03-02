@@ -6,9 +6,10 @@ body {
     margin: 0;
     font-family: 'Pacifico', cursive;
     background-image: url('img/background.png');
-    background-position: bottom;
-    background-repeat: no-repeat;
     height: 100vh;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
 }
 
 canvas {
@@ -20,6 +21,28 @@ canvas {
     display: none;
 }
 
+.canvas-div {
+    position: relative;
+}
+
+.for-canvas-fullscreen {
+    height: 100vh;
+    width: 100vw;
+}
+
+.icons-during-game {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 600px;
+}
+
+.icons-div-game {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .start-screen {
     display: flex;
     justify-content: space-between;
@@ -28,6 +51,15 @@ canvas {
     background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.start-screen-properties-for-canvas {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-within-the-game {
+    display: flex;
 }
 
 .icon {
@@ -42,6 +74,24 @@ canvas {
     margin-top: 10px;
     padding: 4px;
     font-family: 'Smokum', cursive;
+    margin-top: 10px;
+    margin-right: 4px;
+}
+
+.fullscreen-icon {
+    width: 40px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-color: #FFD111;
+    font-weight: 300;
+    font-size: 30px;
+    cursor: pointer;
+    margin-top: 10px;
+    padding: 4px;
+    font-family: 'Smokum', cursive;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 button {

@@ -20,12 +20,17 @@ function startGame() {
     let gameDescription = document.getElementById('gameDescription');
     let consoleDescription = document.getElementById('console');
     let canvas = document.getElementById('canvas');
+    let iconsDuringGame = document.getElementById('iconsDuringGame');
     startButton.classList.add('d-none');
     startIcons.classList.add('d-none');
     startScreen.classList.remove('start-screen');
+    startScreen.classList.add('start-screen-properties-for-canvas');
     gameDescription.classList.add('d-none');
     consoleDescription.classList.add('d-none');
     canvas.classList.remove('d-none');
+    iconsDuringGame.classList.remove('d-none');
+    startScreen.style.height = 'unset';
+    startScreen.style.width = 'unset';
 }
 
 window.addEventListener("keydown", (e) => {

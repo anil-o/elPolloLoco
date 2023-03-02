@@ -1,3 +1,6 @@
+let notInFullscreen = true;
+let klickedEscape = false;
+
 function backToStartScreen() {
     let startButton = document.getElementById('startButton');
     let startIcons = document.getElementById('startIcons');
@@ -87,4 +90,99 @@ function templateConsoleDescritpion() {
     </div>
     
     </div>`;
+}
+
+window.onkeydown = e => {
+    if (e.keyCode === 27) {
+        klickedEscape = true;
+        whenEscapeIsKlicked();
+    }
+  }
+
+
+
+window.addEventListener("keyup", (e) => {
+    if (e.keyCode == 27) {
+        klickedEscape = true;
+        whenEscapeIsKlicked();
+    }
+});
+
+function whenEscapeIsKlicked() {
+    let changeIconFullscreen = document.getElementById('fullscreen');
+    let changeIconFullscreenSecond = document.getElementById('fullscreenSecond');
+    changeIconFullscreen.src = 'img/fullscreen_exit.png';
+    changeIconFullscreenSecond.src = 'img/fullscreen_exit.png';
+    let canvas = document.getElementById('canvas');
+    canvas.classList.remove('for-canvas-fullscreen');
+    let startScreen = document.getElementById('startScreen');
+    startScreen.style.height = '480px';
+    startScreen.style.width = '720px';
+    notInFullscreen = true;
+    exitFullscreen();
+    klickedEscape = false;
+}
+
+function startFullscreen(fullscreenId) {
+    if (notInFullscreen) {
+        whenItsNotFullscreen(fullscreenId);
+    } else {
+        whenItsAlreadyFulllscreen(fullscreenId);
+    }
+}
+
+function whenItsNotFullscreen(fullscreenId) {
+    let changeIconFullscreen = document.getElementById(fullscreenId);
+    changeIconFullscreen.src = 'img/fullscreen_exit.png';
+    let startScreen = document.getElementById('startScreen');
+    let canvas = document.getElementById('canvas');
+    canvas.classList.add('for-canvas-fullscreen');
+    startScreen.style.height = '100vh';
+    startScreen.style.width = '100vw';
+    notInFullscreen = false;
+    fullscreen();
+}
+
+function whenItsAlreadyFulllscreen(fullscreenId) {
+    let changeIconFullscreen = document.getElementById(fullscreenId);
+    changeIconFullscreen.src = 'img/fullscreen.png';
+    let canvas = document.getElementById('canvas');
+    canvas.classList.remove('for-canvas-fullscreen');
+    let startScreen = document.getElementById('startScreen');
+    checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen);
+    notInFullscreen = true;
+    exitFullscreen();
+}
+
+function checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen) {
+    if (fullscreenId == 'fullscreenSecond') {
+        startScreen.style.height = 'unset';
+        startScreen.style.width = 'unset';
+    } else {
+        startScreen.style.height = '480px';
+        startScreen.style.width = '720px';
+    }
+}
+
+function fullscreen() {
+    let fullscreenDiv = document.getElementById('fullscreenDiv');
+    enterFullscreen(fullscreenDiv);
+}
+
+function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+        element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+        element.webkitRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    }
 }
