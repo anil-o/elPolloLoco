@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let soundtrack = new Audio('audio/soundtrack.mp3');
 
 
 /*
@@ -8,9 +9,9 @@ let keyboard = new Keyboard();
  */
 function init() {
     startGame();
-    initLevel(); 
+    initLevel();
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, soundtrack);
 }
 
 function startGame() {
@@ -31,46 +32,53 @@ function startGame() {
     iconsDuringGame.classList.remove('d-none');
     startScreen.style.height = 'unset';
     startScreen.style.width = 'unset';
+    startSoundtrack();
+}
+
+function startSoundtrack() {
+    soundtrack.play();
+    soundtrack.volume = 0.03;
+    soundtrack.currentTime = 6.5;
 }
 
 window.addEventListener("keydown", (e) => {
-    if(e.keyCode == 37) {
+    if (e.keyCode == 37) {
         keyboard.LEFT = true;
     }
-    if(e.keyCode == 39) {
+    if (e.keyCode == 39) {
         keyboard.RIGHT = true;
     }
-    if(e.keyCode == 38) {
+    if (e.keyCode == 38) {
         keyboard.UP = true;
     }
-    if(e.keyCode == 40) {
+    if (e.keyCode == 40) {
         keyboard.DOWN = true;
     }
-    if(e.keyCode == 32) {
+    if (e.keyCode == 32) {
         keyboard.SPACE = true;
     }
-    if(e.keyCode == 68) {
+    if (e.keyCode == 68) {
         keyboard.D = true;
     }
 });
 
 window.addEventListener("keyup", (e) => {
-    if(e.keyCode == 37) {
+    if (e.keyCode == 37) {
         keyboard.LEFT = false;
     }
-    if(e.keyCode == 39) {
+    if (e.keyCode == 39) {
         keyboard.RIGHT = false;
     }
-    if(e.keyCode == 38) {
+    if (e.keyCode == 38) {
         keyboard.UP = false;
     }
-    if(e.keyCode == 40) {
+    if (e.keyCode == 40) {
         keyboard.DOWN = false;
     }
-    if(e.keyCode == 32) {
+    if (e.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    if(e.keyCode == 68) {
+    if (e.keyCode == 68) {
         keyboard.D = false;
     }
 });

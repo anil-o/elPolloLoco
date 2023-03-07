@@ -1,6 +1,6 @@
 class Character extends MoveableObject {
     y = 135;
-    speed = 4;
+    speed = 7;
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
         'img/2_character_pepe/2_walk/W-22.png',
@@ -36,6 +36,7 @@ class Character extends MoveableObject {
     ];
     world;
     walking_sound = new Audio('audio/walking_pepe.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
     offset = {
         top: 120,
         left: 0,
@@ -71,6 +72,7 @@ class Character extends MoveableObject {
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;

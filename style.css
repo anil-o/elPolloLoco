@@ -5,8 +5,15 @@ body {
     align-items: center;
     margin: 0;
     font-family: 'Pacifico', cursive;
-    background-image: url('img/background.png');
     height: 100vh;
+    background-image: url('img/background.png');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+}
+
+.fullscreen-div {
+    background-image: url('img/background.png');
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: cover;
@@ -18,7 +25,7 @@ canvas {
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 .canvas-div {
@@ -114,12 +121,17 @@ button {
     font-weight: 800;
 }
 
+.game-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
 .intro-text {
     width: 600px;
     height: 600px;
     background-color: white;
-    border-radius: 20px;
     opacity: 0.9;
     font-size: 18px;
     color: #5e2028;
@@ -129,11 +141,17 @@ button {
     text-align: justify;
 }
 
+.console-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .console-keyboard {
     width: 600px;
     height: 600px;
     background-color: white;
-    border-radius: 20px;
     opacity: 0.9;
     font-size: 19px;
     color: #5e2028;

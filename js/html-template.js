@@ -9,7 +9,7 @@ function backToStartScreen() {
     let consoleDescription = document.getElementById('console');
     startButton.classList.remove('d-none');
     startIcons.classList.remove('d-none');
-    startScreen.classList.add('start-screen');
+    startScreen.style.display = 'flex';
     gameDescription.classList.add('d-none');
     consoleDescription.classList.add('d-none');
 }
@@ -21,7 +21,7 @@ function loadDescription() {
     let gameDescription = document.getElementById('gameDescription');
     startButton.classList.add('d-none');
     startIcons.classList.add('d-none');
-    startScreen.classList.remove('start-screen');
+    startScreen.style.display = 'none';
     gameDescription.classList.remove('d-none');
     gameDescription.innerHTML = templateLoadDescription();
 }
@@ -39,7 +39,7 @@ function templateLoadDescription() {
     will not surrender without a fight and will do everything in their power to stop you. Fortunately, Pepe is
     equipped with a variety of weapons and skills that will help him overcome any obstacle. <br> <br>
 
-    Try to collect the coins as quickly as possible to gain speed. You can kill the creatures by jumping on them or throwing them with the bottle.
+    Try to collect the coins as quickly as possible. You can kill the creatures by jumping on them or throwing them with the bottle.
     But make sure you have enough bottles to defeat the final boss. You have to hit him four times. Otherwise you will be trapped forever.<br><br> 
     
     <div class="title">I wish you good luck on your journey!</div>
@@ -54,7 +54,7 @@ function consoleDescription() {
     let consoleDescription = document.getElementById('console');
     startButton.classList.add('d-none');
     startIcons.classList.add('d-none');
-    startScreen.classList.remove('start-screen');
+    startScreen.style.display = 'none';
     gameDescription.classList.add('d-none');
     consoleDescription.classList.remove('d-none');
     consoleDescription.innerHTML = templateConsoleDescritpion();
@@ -92,25 +92,30 @@ function templateConsoleDescritpion() {
     </div>`;
 }
 
-window.onkeydown = e => {
-    if (e.keyCode === 27) {
-        klickedEscape = true;
-        whenEscapeIsKlicked();
+/**
+ * If ESC is klicked to adapt screen
+ */
+document.addEventListener('fullscreenchange', exitHandler);
+document.addEventListener('webkitfullscreenchange', exitHandler);
+document.addEventListener('mozfullscreenchange', exitHandler);
+document.addEventListener('MSFullscreenChange', exitHandler);
+
+function exitHandler() {
+    if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+      whenEscapeIsKlicked();
     }
-  }
+}  
 
-
-
-window.addEventListener("keyup", (e) => {
-    if (e.keyCode == 27) {
-        klickedEscape = true;
-        whenEscapeIsKlicked();
-    }
-});
-
+/**
+ * If ESC is klicked to adapt screen
+ */
 function whenEscapeIsKlicked() {
     let changeIconFullscreen = document.getElementById('fullscreen');
     let changeIconFullscreenSecond = document.getElementById('fullscreenSecond');
+    let gameDescription = document.getElementById('gameDescription');
+    let consoleDescription = document.getElementById('console');
+    gameDescription.classList.remove('game-description');
+    consoleDescription.classList.remove('console-description');
     changeIconFullscreen.src = 'img/fullscreen_exit.png';
     changeIconFullscreenSecond.src = 'img/fullscreen_exit.png';
     let canvas = document.getElementById('canvas');
@@ -133,22 +138,34 @@ function startFullscreen(fullscreenId) {
 
 function whenItsNotFullscreen(fullscreenId) {
     let changeIconFullscreen = document.getElementById(fullscreenId);
-    changeIconFullscreen.src = 'img/fullscreen_exit.png';
+    if(changeIconFullscreen.src != 'img/fullscreen_exit.png') {
+        changeIconFullscreen.src = 'img/fullscreen_exit.png';
+    }
     let startScreen = document.getElementById('startScreen');
     let canvas = document.getElementById('canvas');
+    let gameDescription = document.getElementById('gameDescription');
+    let consoleDescription = document.getElementById('console');
     canvas.classList.add('for-canvas-fullscreen');
     startScreen.style.height = '100vh';
     startScreen.style.width = '100vw';
+    gameDescription.classList.add('game-description');
+    consoleDescription.classList.add('console-description');
     notInFullscreen = false;
     fullscreen();
 }
 
 function whenItsAlreadyFulllscreen(fullscreenId) {
     let changeIconFullscreen = document.getElementById(fullscreenId);
-    changeIconFullscreen.src = 'img/fullscreen.png';
+    if(changeIconFullscreen.src != 'img/fullscreen.png') {
+        changeIconFullscreen.src = 'img/fullscreen.png';
+    }
     let canvas = document.getElementById('canvas');
     canvas.classList.remove('for-canvas-fullscreen');
     let startScreen = document.getElementById('startScreen');
+    let gameDescription = document.getElementById('gameDescription');
+    let consoleDescription = document.getElementById('console');
+    gameDescription.classList.remove('game-description');
+    consoleDescription.classList.remove('console-description');
     checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen);
     notInFullscreen = true;
     exitFullscreen();

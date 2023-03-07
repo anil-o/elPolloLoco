@@ -1,5 +1,13 @@
 class World {
     character = new Character();
+    endboss = new Endboss();
+    soundtrackChickenKill = new Audio('audio/chicken_kill.mp3');
+    soundtrackBottleCollecting = new Audio('audio/bottle_collected.mp3');
+    soundtrackEndboss = new Audio('audio/endboss.mp3');
+    soundtrackHurt = new Audio('audio/hurt.mp3');
+    soundtrackGameOver = new Audio('audio/game_over.mp3');
+    soundtrackBottleSmash = new Audio('audio/bottle_smash.mp3');
+    soundtrack;
     level = level1;
     canvas;
     ctx;
@@ -9,46 +17,39 @@ class World {
     statusBarCoins = new StatusbarCoins();
     statusBarBottles = new StatusbarBottles();
     statusBarHealthEndboss = new StatusbarHealthEndboss();
-    endboss = new Endboss();
     throwableObjects = [];
-    soundtrackChickenKill = new Audio('audio/chicken_kill.mp3');
-    soundtrackBottleCollecting = new Audio('audio/bottle_collected.mp3');
-    soundtrackEndboss = new Audio('audio/endboss.mp3');
-    soundtrackHurt = new Audio('audio/hurt.mp3');
-    soundtrack = new Audio('audio/soundtrack.mp3');
 
-    constructor(canvas, keyboard) {
+
+    constructor(canvas, keyboard, soundtrack) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.soundtrack = soundtrack;
         this.draw();
         this.setWorld();
         this.run();
-        this.startSoundtrackOfTheGame();
+
     }
 
     run() {
-        /*this.startSoundtrackOfTheGame();*/
         setInterval(() => {
             this.collisionEnemies();
             this.collisionCoins();
             this.collisionBottles();
             this.collisonThrowableBottlesWithEndboss();
             this.collisionWithEndboss();
-            this.checkThrowableObjects();
+            this.checkThrowableObjectsRight();
+            this.checkThrowableObjectsLeft();
         }, 200);
 
         setInterval(() => {
             this.checkCharacterKilledChicken();
             this.checkIfEndbossIsReached();
             this.checkThrowableBottleKilledChicken();
+            this.checkIfGameIsOver();
         }, 10);
     }
 
-    startSoundtrackOfTheGame() {
-        this.soundtrack.volume = 0.1;
-        this.soundtrack.play();
-    }
 
 
     collisionEnemies() {
@@ -58,7 +59,7 @@ class World {
                     this.character.hit();
                     this.character.isHurt();
                     this.statusBarHealth.setPercentage(this.character.energy);
-                    if(this.character.energy > 0) {
+                    if (this.character.energy > 0) {
                         this.soundtrackHurt.play();
                     }
                 }
@@ -68,13 +69,12 @@ class World {
 
     collisionWithEndboss() {
         if (this.character.isColliding(this.endboss)) {
-                this.character.hit();
-                this.character.isHurt();
-                this.character.energy = 0;
-                this.statusBarHealth.setPercentage(this.character.energy);
-                if(this.character.energy > 0) {
-                    this.soundtrackHurt.play();
-                }
+            this.character.hittedByEndboss();
+            this.character.isHurt();
+            this.statusBarHealth.setPercentage(this.character.energy);
+            if (this.character.energy > 0) {
+                this.soundtrackHurt.play();
+            }
         }
     }
 
@@ -123,9 +123,6 @@ class World {
                 this.character.collectCoins();
                 this.level.coins.splice(index, 1);
                 this.statusBarCoins.setPercentageCoins(this.character.coinAmount);
-                if(this.character.coinAmount >= 30) {
-                    this.character.speed = 8;
-                }
             }
         });
     }
@@ -140,10 +137,23 @@ class World {
         });
     }
 
-    checkThrowableObjects() {
-        if (this.keyboard.D) {
+    checkThrowableObjectsRight() {
+        if (this.keyboard.D && !this.character.otherDirection) {
             if (this.character.bottleAmount > 0) {
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                let bottle = new ThrowableObject(this.character.x, this.character.y + 50, this.character.otherDirection);
+                this.throwableObjects.push(bottle);
+                this.character.bottleAmount -= 1;
+                this.character.bottle -= 20;
+                this.statusBarBottles.setPercentageBottles(this.character.bottle);
+                this.endboss.endbossHit = true;
+            }
+        }
+    }
+
+    checkThrowableObjectsLeft() {
+        if (this.keyboard.D && this.character.otherDirection) {
+            if (this.character.bottleAmount > 0) {
+                let bottle = new ThrowableObject(this.character.x, this.character.y + 50, this.character.otherDirection);
                 this.throwableObjects.push(bottle);
                 this.character.bottleAmount -= 1;
                 this.character.bottle -= 20;
@@ -159,7 +169,6 @@ class World {
                 this.soundtrackChickenKill.play();
                 this.soundtrackChickenKill.playbackRate = 1.5;
                 this.endboss.hitEndboss();
-                console.log('Endboss getroffen: ', this.endboss.healthEndboss);
                 this.statusBarHealthEndboss.setPercentageEndboss(this.endboss.healthEndboss);
                 this.endboss.endbossHit = false;
             }
@@ -180,6 +189,24 @@ class World {
             this.soundtrack.pause();
             this.soundtrackEndboss.play();
             this.endboss.reachedEndboss = true;
+        }
+    }
+
+    checkIfGameIsOver() {
+        if (this.endboss.healthEndboss == 0 || this.character.energy == 0) {
+            let interval_id = window.setInterval(function () { }, Number.MAX_SAFE_INTEGER);
+            setInterval(() => {
+                for (let i = 1; i < interval_id; i++) {
+                    window.clearInterval(i);
+                }
+            }, 800);
+            this.soundtrack.pause();
+            this.soundtrackBottleCollecting.pause();
+            this.soundtrackChickenKill.pause();
+            this.soundtrackEndboss.pause();
+            this.character.walking_sound.pause();
+            this.soundtrackBottleSmash.pause();
+            this.soundtrackGameOver.play();
         }
     }
 

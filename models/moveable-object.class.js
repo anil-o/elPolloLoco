@@ -21,6 +21,8 @@ class MoveableObject extends DrawableObject {
     reachedEndboss = false;
     endbossHit = false;
     soundtrackCoinCollecting = new Audio('audio/coin_collected.mp3');
+  
+    
 
     applyGravity() {
         setInterval(() => {
@@ -54,6 +56,15 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    hittedByEndboss() {
+        this.energy -= 30;
+        if(this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //Difference in ms
         timepassed = timepassed / 1000; //Difference in sec
@@ -70,7 +81,6 @@ class MoveableObject extends DrawableObject {
 
     hitEndboss() {
         this.healthEndboss -= 25;
-        console.log(this.healthEndboss);
         if(this.healthEndboss < 0) {
             this.healthEndboss = 0;
         }

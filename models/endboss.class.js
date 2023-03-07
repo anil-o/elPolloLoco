@@ -53,53 +53,36 @@ class Endboss extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            if (this.endbossHit && !this.endbossDead()) {
-                this.moveFaster();
+            if (this.endbossHit && !this.endbossDead() && this.reachedEndboss) {
                 this.playAnimation(this.IMAGES_HIT);
+            } else if (this.reachedEndboss && !this.endbossDead() && !this.endbossHit && this.healthEndboss > 60) {
+                this.playAnimation(this.IMAGES_WALKING);
+            } else if (!this.reachedEndboss && !this.endbossDead()) {
+                this.playAnimation(this.IMAGES_ALERT);
+            } else if (this.healthEndboss <= 60 && this.healthEndboss > 0 && !this.endbossHit) {
+                this.speed = 5;
+                this.playAnimation(this.IMAGES_ATTACK);
+            } else if (this.endbossDead()) {
+                this.speed = 0;
+                this.playAnimation(this.IMAGES_DEAD);
             }
-        }, 200);
+        }, 400);
 
         setInterval(() => {
             if (this.reachedEndboss && !this.endbossDead() && !this.endbossHit) {
                 this.moveLeft();
             }
         }, 1000 / 60);
-
-        setInterval(() => {
-            if (this.reachedEndboss && !this.endbossDead() && !this.endbossHit) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 100);
-
-        setInterval(() => {
-            if (!this.reachedEndboss && !this.endbossDead()) {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
-        }, 200);
-
-        setInterval(() => {
-            if (this.endbossDead()) {
-                this.speed = 0;
-                this.playAnimation(this.IMAGES_DEAD);
-            }
-        }, 400);
     }
 
     moveLeft() {
-        if(this.x > 0) {
+        if (this.x > 0) {
             this.x -= this.speed;
         }
     }
 
     moveFaster() {
-        if(this.healthEndboss <= 50) {
-            this.speed = 5;
-        }
-    }
-}
-
-/*setInterval(() => {
-    if (this.reachedEndboss && !this.endbossDead()) {
+        this.speed = 5;
         this.playAnimation(this.IMAGES_ATTACK);
     }
-}, 200);*/
+}
