@@ -1,12 +1,6 @@
 class World {
     character = new Character();
     endboss = new Endboss();
-    soundtrackChickenKill = new Audio('audio/chicken_kill.mp3');
-    soundtrackBottleCollecting = new Audio('audio/bottle_collected.mp3');
-    soundtrackEndboss = new Audio('audio/endboss.mp3');
-    soundtrackHurt = new Audio('audio/hurt.mp3');
-    soundtrackGameOver = new Audio('audio/game_over.mp3');
-    soundtrackBottleSmash = new Audio('audio/bottle_smash.mp3');
     soundtrack;
     level = level1;
     canvas;
@@ -20,11 +14,10 @@ class World {
     throwableObjects = [];
 
 
-    constructor(canvas, keyboard, soundtrack) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.soundtrack = soundtrack;
         this.draw();
         this.setWorld();
         this.run();
@@ -60,7 +53,7 @@ class World {
                     this.character.isHurt();
                     this.statusBarHealth.setPercentage(this.character.energy);
                     if (this.character.energy > 0) {
-                        this.soundtrackHurt.play();
+                        soundtrackHurt.play();
                     }
                 }
             }
@@ -73,7 +66,7 @@ class World {
             this.character.isHurt();
             this.statusBarHealth.setPercentage(this.character.energy);
             if (this.character.energy > 0) {
-                this.soundtrackHurt.play();
+                soundtrackHurt.play();
             }
         }
     }
@@ -105,8 +98,8 @@ class World {
     }
 
     killEnemy(enemy) {
-        this.soundtrackChickenKill.play();
-        this.soundtrackChickenKill.playbackRate = 1.5;
+        soundtrackChickenKill.play();
+        soundtrackChickenKill.playbackRate = 1.5;
         if (enemy instanceof Chicken) {
             enemy.isAlive = false;
             enemy.img = enemy.IMAGE_DEAD;
@@ -145,7 +138,7 @@ class World {
                 this.character.bottleAmount -= 1;
                 this.character.bottle -= 20;
                 this.statusBarBottles.setPercentageBottles(this.character.bottle);
-                this.endboss.endbossHit = true;
+                this.endboss.endbossAlreadyHit = true;
             }
         }
     }
@@ -158,25 +151,26 @@ class World {
                 this.character.bottleAmount -= 1;
                 this.character.bottle -= 20;
                 this.statusBarBottles.setPercentageBottles(this.character.bottle);
-                this.endboss.endbossHit = true;
+                this.endboss.endbossAlreadyHit = true;
             }
         }
     }
 
     collisonThrowableBottlesWithEndboss() {
         this.throwableObjects.forEach((throwableBottle) => {
-            if (this.endboss.isColliding(throwableBottle) && this.endboss.endbossHit) {
-                this.soundtrackChickenKill.play();
-                this.soundtrackChickenKill.playbackRate = 1.5;
+            if (this.endboss.isColliding(throwableBottle) && this.endboss.endbossAlreadyHit) {
+                soundtrackChickenKill.play();
+                soundtrackChickenKill.playbackRate = 1.5;
                 this.endboss.hitEndboss();
                 this.statusBarHealthEndboss.setPercentageEndboss(this.endboss.healthEndboss);
-                this.endboss.endbossHit = false;
+                this.endboss.endbossAlreadyHit = false;
+                this.endboss.endbossHit = true;
             }
         });
     }
 
     collectBottles() {
-        this.soundtrackBottleCollecting.play();
+        soundtrackBottleCollecting.play();
         if (this.character.bottle < 100) {
             this.character.bottle += 20;
             this.character.bottleAmount += 1;
@@ -185,9 +179,9 @@ class World {
     }
 
     checkIfEndbossIsReached() {
-        if (this.character.x >= 3000) {
-            this.soundtrack.pause();
-            this.soundtrackEndboss.play();
+        if (this.character.x >= 2800) {
+            soundtrack.pause();
+            soundtrackEndboss.play();
             this.endboss.reachedEndboss = true;
         }
     }
@@ -200,13 +194,13 @@ class World {
                     window.clearInterval(i);
                 }
             }, 800);
-            this.soundtrack.pause();
-            this.soundtrackBottleCollecting.pause();
-            this.soundtrackChickenKill.pause();
-            this.soundtrackEndboss.pause();
-            this.character.walking_sound.pause();
-            this.soundtrackBottleSmash.pause();
-            this.soundtrackGameOver.play();
+            soundtrack.pause();
+            soundtrackBottleCollecting.pause();
+            soundtrackChickenKill.pause();
+            soundtrackEndboss.pause();
+            walking_sound.pause();
+            soundtrackBottleSmash.pause();
+            soundtrackGameOver.play();
         }
     }
 

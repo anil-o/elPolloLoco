@@ -35,8 +35,6 @@ class Character extends MoveableObject {
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
     world;
-    walking_sound = new Audio('audio/walking_pepe.mp3');
-    jump_sound = new Audio('audio/jump.mp3');
     offset = {
         top: 120,
         left: 0,
@@ -57,22 +55,22 @@ class Character extends MoveableObject {
 
     animate() {
         setInterval(() => {
-            this.walking_sound.pause();
+            walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                walking_sound.play();
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                walking_sound.play();
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
-                this.jump_sound.play();
+                jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;

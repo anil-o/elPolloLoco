@@ -40,7 +40,7 @@ function templateLoadDescription() {
     equipped with a variety of weapons and skills that will help him overcome any obstacle. <br> <br>
 
     Try to collect the coins as quickly as possible. You can kill the creatures by jumping on them or throwing them with the bottle.
-    But make sure you have enough bottles to defeat the final boss. You have to hit him four times. Otherwise you will be trapped forever.<br><br> 
+    But make sure you have enough bottles to defeat the final boss. You have to hit him four times. Otherwise you will be trapped forever.<br><br>
     
     <div class="title">I wish you good luck on your journey!</div>
     </div>`;
@@ -102,22 +102,29 @@ document.addEventListener('MSFullscreenChange', exitHandler);
 
 function exitHandler() {
     if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-      whenEscapeIsKlicked();
+        whenEscapeIsKlicked();
     }
-}  
+}
 
 /**
  * If ESC is klicked to adapt screen
  */
 function whenEscapeIsKlicked() {
-    let changeIconFullscreen = document.getElementById('fullscreen');
+    /*let changeIconFullscreen = document.getElementById('fullscreen');
     let changeIconFullscreenSecond = document.getElementById('fullscreenSecond');
+    changeIconFullscreen.src = 'img/fullscreen_exit.png';
+    changeIconFullscreenSecond.src = 'img/fullscreen_exit.png';*/
+
+    document.getElementById('fullscreen').classList.add('d-none');
+    document.getElementById('fullscreenExit').classList.remove('d-none');
+
+    document.getElementById('fullscreenDuringTheGame').classList.add('d-none');
+    document.getElementById('fullscreenExitDuringTheGame').classList.remove('d-none');
+
     let gameDescription = document.getElementById('gameDescription');
     let consoleDescription = document.getElementById('console');
     gameDescription.classList.remove('game-description');
     consoleDescription.classList.remove('console-description');
-    changeIconFullscreen.src = 'img/fullscreen_exit.png';
-    changeIconFullscreenSecond.src = 'img/fullscreen_exit.png';
     let canvas = document.getElementById('canvas');
     canvas.classList.remove('for-canvas-fullscreen');
     let startScreen = document.getElementById('startScreen');
@@ -137,10 +144,12 @@ function startFullscreen(fullscreenId) {
 }
 
 function whenItsNotFullscreen(fullscreenId) {
-    let changeIconFullscreen = document.getElementById(fullscreenId);
+    /*let changeIconFullscreen = document.getElementById(fullscreenId);
     if(changeIconFullscreen.src != 'img/fullscreen_exit.png') {
         changeIconFullscreen.src = 'img/fullscreen_exit.png';
-    }
+    }*/
+    document.getElementById('fullscreen').classList.add('d-none');
+    document.getElementById('fullscreenExit').classList.remove('d-none');
     let startScreen = document.getElementById('startScreen');
     let canvas = document.getElementById('canvas');
     let gameDescription = document.getElementById('gameDescription');
@@ -155,10 +164,12 @@ function whenItsNotFullscreen(fullscreenId) {
 }
 
 function whenItsAlreadyFulllscreen(fullscreenId) {
-    let changeIconFullscreen = document.getElementById(fullscreenId);
+    /*let changeIconFullscreen = document.getElementById(fullscreenId);
     if(changeIconFullscreen.src != 'img/fullscreen.png') {
         changeIconFullscreen.src = 'img/fullscreen.png';
-    }
+    }*/
+    document.getElementById('fullscreen').classList.remove('d-none');
+    document.getElementById('fullscreenExit').classList.add('d-none');
     let canvas = document.getElementById('canvas');
     canvas.classList.remove('for-canvas-fullscreen');
     let startScreen = document.getElementById('startScreen');
@@ -172,7 +183,7 @@ function whenItsAlreadyFulllscreen(fullscreenId) {
 }
 
 function checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen) {
-    if (fullscreenId == 'fullscreenSecond') {
+    if (fullscreenId == 'fullscreenDuringTheGame' || fullscreenId == 'fullscreenExitDuringTheGame') {
         startScreen.style.height = 'unset';
         startScreen.style.width = 'unset';
     } else {

@@ -1,7 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let soundtrack = new Audio('audio/soundtrack.mp3');
+let intervalIDs = [];
 
 
 /*
@@ -12,6 +12,8 @@ function init() {
     initLevel();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, soundtrack);
+    youLost();
+    gameOver();
 }
 
 function startGame() {
@@ -22,23 +24,55 @@ function startGame() {
     let consoleDescription = document.getElementById('console');
     let canvas = document.getElementById('canvas');
     let iconsDuringGame = document.getElementById('iconsDuringGame');
+    let endscreenYouLost = document.getElementById('endscreen');
+    let endscreenGameOver = document.getElementById('endscreen-game-over');
     startButton.classList.add('d-none');
     startIcons.classList.add('d-none');
     startScreen.classList.remove('start-screen');
     startScreen.classList.add('start-screen-properties-for-canvas');
+    startScreen.style.height = 'unset !important';
+    startScreen.style.width = 'unset !important';
     gameDescription.classList.add('d-none');
     consoleDescription.classList.add('d-none');
     canvas.classList.remove('d-none');
     iconsDuringGame.classList.remove('d-none');
     startScreen.style.height = 'unset';
     startScreen.style.width = 'unset';
+    endscreenYouLost.classList.add('d-none');
+    endscreenGameOver.classList.add('d-none');
     startSoundtrack();
+    soundtrackStartscreen.pause();
 }
 
 function startSoundtrack() {
-    soundtrack.play();
-    soundtrack.volume = 0.03;
-    soundtrack.currentTime = 6.5;
+        soundtrack.play();
+        soundtrack.volume = 0.03;
+        soundtrack.currentTime = 6.5;
+}
+
+function soundtrackStartscreenAudio() {
+    soundtrackStartscreen.play();
+    soundtrackStartscreen.muted = true;
+}
+
+function youLost() {
+    setInterval(() => {
+        if (world.character.energy == 0) {
+            let endscreen = document.getElementById('endscreen');
+            endscreen.classList.remove('d-none');
+            soundtrackYouLost.play();
+        }
+    }, 200);
+}
+
+function gameOver() {
+    setInterval(() => {
+        if (world.endboss.healthEndboss == 0) {
+            let endscreenGameOver = document.getElementById('endscreen-game-over');
+            endscreenGameOver.classList.remove('d-none');
+            soundtrackYouWin.play();
+        }
+    }, 200);
 }
 
 window.addEventListener("keydown", (e) => {
@@ -82,3 +116,9 @@ window.addEventListener("keyup", (e) => {
         keyboard.D = false;
     }
 });
+
+function startGameAgain() {
+    init();
+    soundtrackYouLost.pause();
+    soundtrackYouWin.pause();
+}

@@ -19,8 +19,9 @@ class MoveableObject extends DrawableObject {
         };
     isAlive = true;
     reachedEndboss = false;
+    endbossAlreadyHit = false;
     endbossHit = false;
-    soundtrackCoinCollecting = new Audio('audio/coin_collected.mp3');
+   
   
     
 
@@ -57,7 +58,7 @@ class MoveableObject extends DrawableObject {
     }
 
     hittedByEndboss() {
-        this.energy -= 30;
+        this.energy -= 40;
         if(this.energy < 0) {
             this.energy = 0;
         } else {
@@ -88,8 +89,8 @@ class MoveableObject extends DrawableObject {
 
     collectCoins() {
         if(this.coinAmount < 100) {
-            this.soundtrackCoinCollecting.play();
-            this.soundtrackCoinCollecting.volume = 1.0;
+            soundtrackCoinCollecting.play();
+            soundtrackCoinCollecting.volume = 1.0;
             this.coinAmount += 10;
         }
     }
