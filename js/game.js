@@ -45,13 +45,15 @@ function startGame() {
 }
 
 function startSoundtrack() {
-        soundtrack.play();
-        soundtrack.volume = 0.03;
-        soundtrack.currentTime = 6.5;
+    soundtrack.play();
+    soundtrack.autoplay = true;
+    soundtrack.volume = 0.03;
+    soundtrack.currentTime = 6.5;
 }
 
 function soundtrackStartscreenAudio() {
     soundtrackStartscreen.play();
+    soundtrackStartscreen.autoplay = true;
     soundtrackStartscreen.muted = true;
 }
 
@@ -61,6 +63,7 @@ function youLost() {
             let endscreen = document.getElementById('endscreen');
             endscreen.classList.remove('d-none');
             soundtrackYouLost.play();
+            soundtrackYouLost.autoplay = true;
         }
     }, 200);
 }
@@ -71,6 +74,7 @@ function gameOver() {
             let endscreenGameOver = document.getElementById('endscreen-game-over');
             endscreenGameOver.classList.remove('d-none');
             soundtrackYouWin.play();
+            soundtrackYouWin.autoplay = true;
         }
     }, 200);
 }
