@@ -113,8 +113,8 @@ function exitHandler() {
  * If ESC is klicked to adapt screen
  */
 function whenEscapeIsKlicked() {
-    document.getElementById('fullscreen').classList.add('d-none');
-    document.getElementById('fullscreenExit').classList.remove('d-none');
+    document.getElementById('fullscreen').classList.remove('d-none');
+    document.getElementById('fullscreenExit').classList.add('d-none');
     document.getElementById('fullscreenDuringTheGame').classList.remove('d-none');
     document.getElementById('fullscreenExitDuringTheGame').classList.add('d-none');
     let gameDescription = document.getElementById('gameDescription');

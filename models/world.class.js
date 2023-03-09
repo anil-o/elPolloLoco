@@ -61,7 +61,7 @@ class World {
     }
 
     collisionWithEndboss() {
-        if (this.character.isColliding(this.endboss)) {
+        if (this.character.isColliding(this.endboss) && this.endboss.healthEndboss > 0) {
             this.character.hittedByEndboss();
             this.character.isHurt();
             this.statusBarHealth.setPercentage(this.character.energy);
@@ -179,9 +179,10 @@ class World {
     }
 
     checkIfEndbossIsReached() {
-        if (this.character.x >= 2800) {
+        if (this.character.x >= 2900) {
             soundtrack.pause();
             soundtrackEndboss.play();
+            soundtrackEndboss.loop = true;
             this.endboss.reachedEndboss = true;
         }
     }

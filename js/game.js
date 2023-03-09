@@ -2,7 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let intervalIDs = [];
-
+let soundtrackStartscreenIntervallId;
 
 /*
  * draw playground
@@ -14,6 +14,7 @@ function init() {
     world = new World(canvas, keyboard, soundtrack);
     youLost();
     gameOver();
+    mobileButtons();
 }
 
 function startGame() {
@@ -45,15 +46,16 @@ function startGame() {
 }
 
 function startSoundtrack() {
+    soundtrackStartscreen.pause();
     soundtrack.play();
-    soundtrack.autoplay = true;
+    soundtrack.loop = true;
     soundtrack.volume = 0.03;
     soundtrack.currentTime = 6.5;
 }
 
 function soundtrackStartscreenAudio() {
     soundtrackStartscreen.play();
-    soundtrackStartscreen.autoplay = true;
+    soundtrackStartscreen.loop = true;
     soundtrackStartscreen.muted = true;
 }
 
@@ -121,8 +123,51 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
+function mobileButtons() {
+    document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+
+    document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+
+    document.getElementById('btnRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+
+    document.getElementById('btnJump').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+
+    document.getElementById('btnThrowBottle').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.D = true;
+    });
+
+    document.getElementById('btnThrowBottle').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.D = false;
+    });
+}
+
 function startGameAgain() {
     init();
     soundtrackYouLost.pause();
     soundtrackYouWin.pause();
 }
+
