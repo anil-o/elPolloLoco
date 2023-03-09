@@ -8,6 +8,9 @@ class Chicken extends MoveableObject {
     ];
     IMAGE_DEAD = new Image();
 
+    /**
+     * the function constructor runs always automatically whenever we create a new instance of the class
+     */
     constructor() {
         super();
         this.loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
@@ -18,17 +21,19 @@ class Chicken extends MoveableObject {
         this.speed = 0.15 + Math.random() * 0.8;
     }
 
+    /**
+     * Animates the character
+     */
     animate() {
-            setInterval(() => {
-                if(this.isAlive) {
-                    this.moveLeft();
-                }
-            }, 1000 / 60);
-
-            setInterval(() => {
-                if(this.isAlive) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
-            }, 100);
+        setInterval(() => {
+            if (this.isAlive) {
+                this.moveLeft();
+            }
+        }, 1000 / 60);
+        setInterval(() => {
+            if (this.isAlive) {
+                this.playAnimation(this.IMAGES_WALKING);
+            }
+        }, 100);
     }
 }

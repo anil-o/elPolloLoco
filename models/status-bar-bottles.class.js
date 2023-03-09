@@ -9,6 +9,9 @@ class StatusbarBottles extends DrawableObject {
     ];
     percentage = 0;
 
+    /**
+    * the function constructor runs always automatically whenever we create a new instance of the class
+    */
     constructor() {
         super();
         this.loadImages(this.IMAGES);

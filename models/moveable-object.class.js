@@ -22,16 +22,20 @@ class MoveableObject extends DrawableObject {
     endbossAlreadyHit = false;
     endbossHit = false;
    
-  
-    
-
+    /**
+     * character is above the ground
+     */
     applyGravity() {
         setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+            if (this.isCharacterAboveGround()) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
         }, 1000 / 25);
+    }
+
+    isCharacterAboveGround() {
+        return this.isAboveGround() || this.speedY > 0;
     }
 
     isAboveGround() {
@@ -41,6 +45,9 @@ class MoveableObject extends DrawableObject {
         return this.y < 130;
     }
 
+    /**
+     * character is colliding with object
+     */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
         this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
@@ -48,6 +55,9 @@ class MoveableObject extends DrawableObject {
         this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
+    /**
+     * character is hit
+     */
     hit() {
         this.energy -= 5;
         if(this.energy < 0) {
@@ -57,6 +67,9 @@ class MoveableObject extends DrawableObject {
         }
     }
 
+    /**
+     * character was hit by the endboss
+     */
     hittedByEndboss() {
         this.energy -= 40;
         if(this.energy < 0) {
@@ -80,6 +93,9 @@ class MoveableObject extends DrawableObject {
        return this.healthEndboss == 0;
     }
 
+    /**
+     * character has hit endboss
+     */
     hitEndboss() {
         this.healthEndboss -= 25;
         if(this.healthEndboss < 0) {

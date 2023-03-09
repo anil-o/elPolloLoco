@@ -47,6 +47,7 @@ function startGame() {
 
 function startSoundtrack() {
     soundtrackStartscreen.pause();
+    soundtrackStartscreen.loop = false;
     soundtrack.play();
     soundtrack.loop = true;
     soundtrack.volume = 0.03;
@@ -124,41 +125,50 @@ window.addEventListener("keyup", (e) => {
 });
 
 function mobileButtons() {
+    buttonLeftIsTouched();
+    buttonRightIsTouched();
+    buttonSpaceIsTouched();
+    buttonDIsTouched();
+}
+
+function buttonLeftIsTouched() {
     document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.LEFT = true;
     });
-
     document.getElementById('btnLeft').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.LEFT = false;
     });
+}
 
+function buttonRightIsTouched() {
     document.getElementById('btnRight').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.RIGHT = true;
     });
-
     document.getElementById('btnRight').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.RIGHT = false;
     });
+}
 
+function buttonSpaceIsTouched() {
     document.getElementById('btnJump').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.SPACE = true;
     });
-
     document.getElementById('btnJump').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.SPACE = false;
     });
+}
 
+function buttonDIsTouched() {
     document.getElementById('btnThrowBottle').addEventListener('touchstart', (e) => {
         e.preventDefault();
         keyboard.D = true;
     });
-
     document.getElementById('btnThrowBottle').addEventListener('touchend', (e) => {
         e.preventDefault();
         keyboard.D = false;
@@ -169,5 +179,10 @@ function startGameAgain() {
     init();
     soundtrackYouLost.pause();
     soundtrackYouWin.pause();
+    soundtrackGameOver.pause();
+    soundtrackYouLost.currentTime = 0;
+    soundtrackYouWin.currentTime = 0;
+    soundtrackEndboss.currentTime = 0;
+    soundtrackGameOver.currentTime = 0;
 }
 

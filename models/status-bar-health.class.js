@@ -9,6 +9,9 @@ class StatusbarHealth extends DrawableObject {
     ];
     percentage = 100;
 
+    /**
+    * the function constructor runs always automatically whenever we create a new instance of the class
+    */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -19,7 +22,6 @@ class StatusbarHealth extends DrawableObject {
         this.width = 150;
     }
 
-    
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];

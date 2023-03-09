@@ -2,6 +2,10 @@ let notInFullscreen = true;
 let klickedEscape = false;
 let itsAlreadyExit = true;
 
+
+/**
+ * Comes to the start screen back
+ */
 function backToStartScreen() {
     let startButton = document.getElementById('startButton');
     let startIcons = document.getElementById('startIcons');
@@ -15,6 +19,9 @@ function backToStartScreen() {
     consoleDescription.classList.add('d-none');
 }
 
+/**
+ * Shows the description of the Game
+ */
 function loadDescription() {
     let startButton = document.getElementById('startButton');
     let startIcons = document.getElementById('startIcons');
@@ -47,6 +54,9 @@ function templateLoadDescription() {
     </div>`;
 }
 
+/**
+ * Shows with which keyboard you can play
+ */
 function consoleDescription() {
     let startButton = document.getElementById('startButton');
     let startIcons = document.getElementById('startIcons');
@@ -113,22 +123,30 @@ function exitHandler() {
  * If ESC is klicked to adapt screen
  */
 function whenEscapeIsKlicked() {
+    changeFullscreenIcon();
+    changeScreenWhenClickedEscape();
+    notInFullscreen = true;
+    exitFullscreen();
+    klickedEscape = false;
+}
+
+function changeScreenWhenClickedEscape() {
+    let gameDescription = document.getElementById('gameDescription');
+    let consoleDescription = document.getElementById('console');
+    let canvas = document.getElementById('canvas');
+    let startScreen = document.getElementById('startScreen');
+    gameDescription.classList.remove('game-description');
+    canvas.classList.remove('for-canvas-fullscreen');
+    consoleDescription.classList.remove('console-description');
+    startScreen.style.height = '480px';
+    startScreen.style.width = '720px';
+}
+
+function changeFullscreenIcon() {
     document.getElementById('fullscreen').classList.remove('d-none');
     document.getElementById('fullscreenExit').classList.add('d-none');
     document.getElementById('fullscreenDuringTheGame').classList.remove('d-none');
     document.getElementById('fullscreenExitDuringTheGame').classList.add('d-none');
-    let gameDescription = document.getElementById('gameDescription');
-    let consoleDescription = document.getElementById('console');
-    gameDescription.classList.remove('game-description');
-    consoleDescription.classList.remove('console-description');
-    let canvas = document.getElementById('canvas');
-    canvas.classList.remove('for-canvas-fullscreen');
-    let startScreen = document.getElementById('startScreen');
-    startScreen.style.height = '480px';
-    startScreen.style.width = '720px';
-    notInFullscreen = true;
-    exitFullscreen();
-    klickedEscape = false;
 }
 
 function startFullscreen(fullscreenId) {
@@ -140,10 +158,14 @@ function startFullscreen(fullscreenId) {
 }
 
 function goToFullscreen() {
-    document.getElementById('fullscreen').classList.add('d-none');
-    document.getElementById('fullscreenExit').classList.remove('d-none');
-    document.getElementById('fullscreenDuringTheGame').classList.add('d-none');
-    document.getElementById('fullscreenExitDuringTheGame').classList.remove('d-none');
+    changeFullscreenIconIfItsAlreadyInFullscreen();
+    changeScreenDependOnclickIcon();
+    notInFullscreen = false;
+    itsAlreadyExit = true;
+    fullscreen();
+}
+
+function changeScreenDependOnclickIcon() {
     let startScreen = document.getElementById('startScreen');
     let canvas = document.getElementById('canvas');
     let gameDescription = document.getElementById('gameDescription');
@@ -153,26 +175,31 @@ function goToFullscreen() {
     startScreen.style.width = '100vw';
     gameDescription.classList.add('game-description');
     consoleDescription.classList.add('console-description');
-    notInFullscreen = false;
-    fullscreen();
-    itsAlreadyExit = true;
+}
+
+function changeFullscreenIconIfItsAlreadyInFullscreen() {
+    document.getElementById('fullscreen').classList.add('d-none');
+    document.getElementById('fullscreenExit').classList.remove('d-none');
+    document.getElementById('fullscreenDuringTheGame').classList.add('d-none');
+    document.getElementById('fullscreenExitDuringTheGame').classList.remove('d-none');
 }
 
 function whenItsAlreadyFulllscreen(fullscreenId) {
-    document.getElementById('fullscreen').classList.remove('d-none');
-    document.getElementById('fullscreenExit').classList.add('d-none');
-    document.getElementById('fullscreenDuringTheGame').classList.remove('d-none');
-    document.getElementById('fullscreenExitDuringTheGame').classList.add('d-none');
-    let canvas = document.getElementById('canvas');
-    canvas.classList.remove('for-canvas-fullscreen');
     let startScreen = document.getElementById('startScreen');
+    changeFullscreenIcon();
+    changesTheScreenDependOnIcon();
+    checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen);
+    notInFullscreen = true;
+    exitFullscreen();
+}
+
+function changesTheScreenDependOnIcon() {
+    let canvas = document.getElementById('canvas');
     let gameDescription = document.getElementById('gameDescription');
     let consoleDescription = document.getElementById('console');
     gameDescription.classList.remove('game-description');
     consoleDescription.classList.remove('console-description');
-    checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen);
-    notInFullscreen = true;
-    exitFullscreen();
+    canvas.classList.remove('for-canvas-fullscreen');
 }
 
 function checkFromWhereTheFullscreenEventComesFrom(fullscreenId, startScreen) {
@@ -193,9 +220,9 @@ function fullscreen() {
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.msRequestFullscreen) {      // for IE11 (remove June 15, 2022)
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
-    } else if (element.webkitRequestFullscreen) {  // iOS Safari
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
     }
 }

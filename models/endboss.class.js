@@ -40,6 +40,9 @@ class Endboss extends MoveableObject {
         'img/4_enemie_boss_chicken/4_hurt/G23.png',
     ];
 
+    /**
+    * the function constructor runs always automatically whenever we create a new instance of the class
+    */
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
         this.loadImages(this.IMAGES_ALERT);
@@ -51,29 +54,58 @@ class Endboss extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * Animates the character
+     */
     animate() {
         setInterval(() => {
-            if (this.endbossHit && !this.endbossDead() && this.reachedEndboss) {
-                this.playAnimation(this.IMAGES_HIT);
-                this.endbossHit = false;
-            } else if (this.reachedEndboss && !this.endbossDead() && !this.endbossHit && this.healthEndboss > 60) {
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (!this.reachedEndboss && !this.endbossDead()) {
-                this.playAnimation(this.IMAGES_ALERT);
-            } else if (this.healthEndboss <= 60 && this.healthEndboss > 0 && !this.endbossHit) {
-                this.speed = 5;
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.endbossDead()) {
-                this.speed = 0;
-                this.playAnimation(this.IMAGES_DEAD);
-            }
+            this.actionEndboss();
         }, 400);
-
         setInterval(() => {
-            if (this.reachedEndboss && !this.endbossDead() && !this.endbossHit) {
+            if (this.endbossStartsToMove()) {
                 this.moveLeft();
             }
         }, 1000 / 60);
+    }
+
+    endbossStartsToMove() {
+        return this.reachedEndboss && !this.endbossDead() && !this.endbossHit;
+    }
+
+    /**
+     * Describes what the endboss does in different situations
+     */
+    actionEndboss() {
+        if (this.endbossIsHit()) {
+            this.playAnimation(this.IMAGES_HIT);
+            this.endbossHit = false;
+        } else if (this.endbossWalking()) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (this.endbossAlert()) {
+            this.playAnimation(this.IMAGES_ALERT);
+        } else if (this.endbossGainSpeed()) {
+            this.speed = 5;
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else if (this.endbossDead()) {
+            this.speed = 0;
+            this.playAnimation(this.IMAGES_DEAD);
+        }
+    }
+
+    endbossIsHit() {
+        return this.endbossHit && !this.endbossDead() && this.reachedEndboss;
+    }
+
+    endbossWalking() {
+        return this.reachedEndboss && !this.endbossDead() && !this.endbossHit && this.healthEndboss > 60;
+    }
+
+    endbossAlert() {
+        return !this.reachedEndboss && !this.endbossDead();
+    }
+
+    endbossGainSpeed() {
+        return this.healthEndboss <= 60 && this.healthEndboss > 0 && !this.endbossHit;
     }
 
     moveLeft() {

@@ -2,7 +2,6 @@ class SmallChicken extends MoveableObject {
     height = 70;
     width = 60;
     y = 360;
-
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -10,6 +9,9 @@ class SmallChicken extends MoveableObject {
     ];
     IMAGE_DEAD = new Image();
 
+    /**
+    * the function constructor runs always automatically whenever we create a new instance of the class
+    */
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -19,15 +21,17 @@ class SmallChicken extends MoveableObject {
         this.speed = 0.15 + Math.random() * 0.8;
     }
 
+    /**
+    * Animates the character
+    */
     animate() {
         setInterval(() => {
-            if(this.isAlive) {
+            if (this.isAlive) {
                 this.moveLeft();
             }
         }, 1000 / 60);
-
         setInterval(() => {
-            if(this.isAlive) {
+            if (this.isAlive) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 100);
