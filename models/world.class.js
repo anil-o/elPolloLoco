@@ -14,7 +14,6 @@ class World {
     statusBarHealthEndboss = new StatusbarHealthEndboss();
     throwableObjects = [];
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -22,7 +21,6 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-
     }
 
     run() {
@@ -80,7 +78,7 @@ class World {
      */
     checkCharacterKilledChicken() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && this.character.isAboveGround() && enemy.isAlive == true) {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0 && enemy.isAlive == true) {
                 this.killEnemy(enemy);
                 setTimeout(() => {
                     if (enemy instanceof Chicken || enemy instanceof SmallChicken)
@@ -155,7 +153,7 @@ class World {
                 let bottle = new ThrowableObject(this.character.x, this.character.y + 50, this.character.otherDirection);
                 this.throwableObjects.push(bottle);
                 this.character.bottleAmount -= 1;
-                this.character.bottle -= 20;
+                this.character.bottle -= 10;
                 this.statusBarBottles.setPercentageBottles(this.character.bottle);
                 this.endboss.endbossAlreadyHit = true;
             }
@@ -171,7 +169,7 @@ class World {
                 let bottle = new ThrowableObject(this.character.x, this.character.y + 50, this.character.otherDirection);
                 this.throwableObjects.push(bottle);
                 this.character.bottleAmount -= 1;
-                this.character.bottle -= 20;
+                this.character.bottle -= 10;
                 this.statusBarBottles.setPercentageBottles(this.character.bottle);
                 this.endboss.endbossAlreadyHit = true;
             }
@@ -200,7 +198,7 @@ class World {
     collectBottles() {
         soundtrackBottleCollecting.play();
         if (this.character.bottle < 100) {
-            this.character.bottle += 20;
+            this.character.bottle += 10;
             this.character.bottleAmount += 1;
             this.statusBarBottles.setPercentageBottles(this.character.bottle);
         }

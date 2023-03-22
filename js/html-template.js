@@ -103,6 +103,49 @@ function templateConsoleDescritpion() {
     </div>`;
 }
 
+function consoleDescriptionDuringTheGame() {
+    let consoleDescriptionDuringTheGame = document.getElementById('console');
+    consoleDescriptionDuringTheGame.classList.remove('d-none');
+    consoleDescriptionDuringTheGame.innerHTML = templateConsoleDescritpionDuringTheGame();
+}
+
+function backToStartScreenDuringTheGame() {
+    let consoleDescriptionDuringTheGame = document.getElementById('console');
+    consoleDescriptionDuringTheGame.classList.add('d-none');
+}
+
+function templateConsoleDescritpionDuringTheGame() {
+    return `
+    <div class="console-keyboard">
+    <div onclick="backToStartScreenDuringTheGame()" class="back-icon"><img src="img/back-arrow.png"></div>
+
+    <div class="console">
+
+    <div class="console-child">
+    <div>Move Left</div>
+    <div><img src="img/arrow-left.png"></div>
+    </div>
+
+    <div class="console-child">
+    <div>Move Right</div>
+    <div><img src="img/arrow-right.png"></div>
+    </div>
+
+    <div class="console-child">
+    <div>Jump</div>
+    <div><img src="img/space-bar.png"></div>
+    </div>
+
+    <div class="console-child">
+    <div>Throw Bottle</div>
+    <div class="throwable-keyboard">D</div>
+    </div>
+
+    </div>
+    
+    </div>`;
+}
+
 /**
  * If ESC is klicked to adapt screen
  */

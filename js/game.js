@@ -176,13 +176,6 @@ function buttonDIsTouched() {
 }
 
 function startGameAgain() {
-    init();
-    soundtrackYouLost.pause();
-    soundtrackYouWin.pause();
-    soundtrackGameOver.pause();
-    soundtrackYouLost.currentTime = 0;
-    soundtrackYouWin.currentTime = 0;
-    soundtrackEndboss.currentTime = 0;
-    soundtrackGameOver.currentTime = 0;
+    window.location.reload();
 }
 

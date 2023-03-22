@@ -128,7 +128,7 @@ class Character extends MoveableObject {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.playWalking()) {
             this.playAnimation(this.IMAGES_WALKING);
-        } else {
+        }  else {
             this.playAnimation(this.IMAGES_IDLE);
         }
     }
